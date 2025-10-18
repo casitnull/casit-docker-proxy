@@ -30,7 +30,7 @@ name = "casit-docker-proxy"
 
 [env.production.vars]
 MODE = "production"
-TARGET_UPSTREAM = ""
+TARGET_UPSTREAM = "https://registry-1.docker.io"
 CUSTOM_DOMAIN = "d.always375.top"
 
 [env.staging]
