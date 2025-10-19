@@ -6,6 +6,8 @@ addEventListener("fetch", (event) => {
 const dockerHub = "https://registry-1.docker.io";
 //const dockerHub = "https://registry.hub.docker.com";
 
+const dockerHubV1 = "https://registry.hub.docker.com";
+
 const routes = {
   // production
   ["docker." + CUSTOM_DOMAIN]: dockerHub,
@@ -16,6 +18,8 @@ const routes = {
   ["ghcr." + CUSTOM_DOMAIN]: "https://ghcr.io",
   ["cloudsmith." + CUSTOM_DOMAIN]: "https://docker.cloudsmith.io",
   ["ecr." + CUSTOM_DOMAIN]: "https://public.ecr.aws",
+
+  ["docker-v1." + CUSTOM_DOMAIN]: dockerHubV1,
 
   // staging
   ["docker-staging." + CUSTOM_DOMAIN]: dockerHub,
