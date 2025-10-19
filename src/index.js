@@ -57,10 +57,10 @@ async function handleRequest(request) {
   }
   const isDockerHub = upstream == dockerHub || upstream == dockerHubV1
   const isV1 = upstream == dockerHubV1;
-  const origQueryStr = isEmptyOrNull(url.search) ? "" : "?" + url.search;
+  const origQueryStr = isEmptyOrNull(url.search) ? "" : url.search;
   const authorization = request.headers.get("Authorization");
   if (url.pathname == "/v2/") {
-    const newUrl = new URL(upstream + "/v2/");
+    const newUrl = new URL(upstream + "/v2/" + origQueryStr);
     const headers = new Headers();
     if (authorization) {
       headers.set("Authorization", authorization);
@@ -110,7 +110,7 @@ async function handleRequest(request) {
     if (pathParts.length == 5) {
       pathParts.splice(2, 0, "library");
       const redirectUrl = new URL(url);
-      redirectUrl.pathname = pathParts.join("/") + origQueryStr;
+      redirectUrl.pathname = pathParts.join("/");
       return Response.redirect(redirectUrl, 301);
     }
   }
