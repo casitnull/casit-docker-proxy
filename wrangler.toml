@@ -9,7 +9,7 @@ port = 8787
 local_protocol = "http"
 
 [env.vars]
-CUSTOM_DOMAIN = "d.always375.top"
+# CUSTOM_DOMAIN = "d.always375.top"
 
 [env.dev.vars]
 MODE = "debug"
@@ -31,7 +31,7 @@ name = "casit-docker-proxy"
 [env.production.vars]
 MODE = "production"
 TARGET_UPSTREAM = "https://registry-1.docker.io"
-CUSTOM_DOMAIN = "d.always375.top"
+# CUSTOM_DOMAIN = "d.always375.top"
 
 [env.staging]
 name = "cloudflare-docker-proxy-staging"
