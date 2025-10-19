@@ -110,7 +110,7 @@ async function handleRequest(request) {
     if (pathParts.length == 5) {
       pathParts.splice(2, 0, "library");
       const redirectUrl = new URL(url);
-      redirectUrl.pathname = pathParts.join("/") + ;
+      redirectUrl.pathname = pathParts.join("/") + origQueryStr;
       return Response.redirect(redirectUrl, 301);
     }
   }
