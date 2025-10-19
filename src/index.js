@@ -3,6 +3,10 @@ addEventListener("fetch", (event) => {
   event.respondWith(handleRequest(event.request));
 });
 
+function isEmptyOrNull(str) {
+    return str == null || str === '';
+}
+
 const dockerHub = "https://registry-1.docker.io";
 //const dockerHub = "https://registry.hub.docker.com";
 
@@ -51,7 +55,9 @@ async function handleRequest(request) {
       }
     );
   }
-  const isDockerHub = upstream == dockerHub;
+  const isDockerHub = upstream == dockerHub || upstream == dockerHubV1
+  const isV1 = upstream == dockerHubV1;
+  const origQueryStr = isEmptyOrNull(url.search) ? "" : "?" + url.search;
   const authorization = request.headers.get("Authorization");
   if (url.pathname == "/v2/") {
     const newUrl = new URL(upstream + "/v2/");
@@ -72,7 +78,7 @@ async function handleRequest(request) {
   }
   // get token
   if (url.pathname == "/v2/auth") {
-    const newUrl = new URL(upstream + "/v2/");
+    const newUrl = new URL(upstream + "/v2/" + origQueryStr);
     const resp = await fetch(newUrl.toString(), {
       method: "GET",
       redirect: "follow",
@@ -104,12 +110,12 @@ async function handleRequest(request) {
     if (pathParts.length == 5) {
       pathParts.splice(2, 0, "library");
       const redirectUrl = new URL(url);
-      redirectUrl.pathname = pathParts.join("/");
+      redirectUrl.pathname = pathParts.join("/") + ;
       return Response.redirect(redirectUrl, 301);
     }
   }
   // foward requests
-  const newUrl = new URL(upstream + url.pathname);
+  const newUrl = new URL(upstream + url.pathname + origQueryStr);
   const newReq = new Request(newUrl, {
     method: request.method,
     headers: request.headers,
